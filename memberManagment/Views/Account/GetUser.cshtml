@@ -1,0 +1,233 @@
+﻿@using memberManagment.Data
+@model List<Accounts>
+@{var id = 0; }
+<html>
+<head>
+</head>
+<body>
+
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="add">
+        Add Member
+    </button>
+
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">MemberID</th>
+                <th scope="col">Status</th>
+                <th scope="col">FirstName</th>
+                <th scope="col">LastName</th>
+                <th scope="col">Country</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Notes</th>
+
+
+            </tr>
+        </thead>
+
+        <tbody>
+            @{ 
+                
+                foreach (var x in Model)
+                {
+
+                        <tr>
+                            <td scope="row" id="num">
+                                @(++id)
+                            </td>
+                            <td>@x.status</td>
+                            <td>@x.FirstName</td>
+                            <td>@x.LastName</td>
+                            <td>@x.Country</td>
+                            <td>@x.gender</td>
+
+                            <td>@x.Note</td>
+                            @*<td><img src="@x.imageurl" style="height:40px;width:40px" /></td>*@
+                            <td><button type="button" data-id="@x.Id" class="del">Delete</button></td>
+                            <td><button type="button"  class="btn btn-primary edit" data-toggle="modal" data-target="#exampleModal" data-edit="@x.Id"   id="edit">Edit </button></td>
+
+
+
+
+
+
+                        </tr>
+                    }
+                 }
+
+        </tbody>
+    </table>
+
+
+
+
+
+
+
+
+</body>
+</html>
+@section Scripts{
+    <script>
+
+
+
+
+        $(function () {
+
+
+
+                 $("#add").click(function () {
+                     $('.modal-content').trigger("reset");
+
+                 $.get("@Url.Action("viewuser", "Account")",
+                     function (data) {
+                         $('.modal-content').html(data);
+                     });
+
+                 });
+
+            $(".edit").on("click", function () {
+
+                var id = $(this).data("edit");
+
+                $.ajax({
+                    url: "@Url.Action("Edit", "Account")",
+                    data: {"id" : id},
+                    method: "get",
+                    success: function (res) {
+                        $('.modal-content').html(res);
+                    }
+                });
+
+                     });
+
+
+                 $(".del").click(function (e) {
+                     var id= $(this).data("id");
+                     var button = this;
+
+                     $.ajax({
+                         url: "@Url.Action("del", "Account")/"+ id,
+                         method: "get",
+
+                     success: function (res) {
+                         alert(res);
+                         $(button).closest("tr").remove();
+                         var num = 1;
+                         $("table tr td#num").each(function () {
+                             $(this).html(num);
+                             num++;
+                         })
+
+                     }, error: function () {
+                         alert("something went wrong");
+                     }
+                 });
+
+                 });
+
+            $("body").on("change", "#country", function () {
+                $("#city").empty();
+                    console.log("Hll");
+                var item = $(this);
+                $.ajax({
+                    type: "get",
+                    url: "@Url.Action("cities", "Account")" ,
+                    data: { id: item.val() },
+                    success: function (e) {
+                        $.each(e, function (i,item) {
+                            $("#city").append(
+                                `
+                                <option value="${item.value}">${item.text}</option>
+
+                                    `
+
+                            )
+
+                        })
+                    }
+
+                })
+            })
+
+            /*///////////////*/
+
+
+
+            $("body").on("submit","#Addform" ,function (e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                var id = $("#MyId").val();
+                var fname = $("#fname").val();
+                var lname = $("#lname").val();
+                var birth = $("#birth").val();
+                var country = $("#country").val();
+                var city = $("#city").val();
+                var email = $("#email").val();
+                var status = $("#status").val();
+                var text = $("#text").val();
+                var phone = $("#phone").val();
+                var gender = $("#gender").val();
+
+
+
+
+                $.ajax({
+                    url: "/Account/Addmember",
+                    method: "POST",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+
+                    success: function (data) {
+                        console.log(data);
+
+                        if (data.isValid) {
+
+                            $("#exampleModal").modal("hide");
+
+                              var row = `
+                                 <tr >
+                                  <td>${@(++id)}</td>
+                                  <td>${data.data.status}</td>
+                                  <td>${data.data.firstName}</td>
+                                  <td>${data.data.lastName}</td>
+                                  <td>${data.data.country}</td>
+                                  <td>${data.data.gender}</td>
+                                  <td>${data.data.note}</td>
+                                  <td><button type="button" data-id="${id}" class="del">Delete</button></td>
+                                  <td><button type="button"  class="btn btn-primary edit" data-toggle="modal" data-target="#exampleModal" data-edit="${id}"   id="edit">Edit </button></td>
+                                    <br>
+                                    </tr >`
+                            if (id == null) {
+
+                                $("table").append(row);
+                            }
+                            else {
+                                $(`button[data-id='${id}']`).closest("tr").replaceWith(row);
+                            }
+
+                        } else {
+                            alert("some feild are Required");
+                        }
+
+                    },
+
+                    error: function (err) {
+                        console.log(err);
+                        alert("fail");
+                    }
+                });
+            });
+
+        });
+
+    </script>
+}
+
+

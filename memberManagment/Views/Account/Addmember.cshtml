@@ -1,0 +1,195 @@
+﻿@model memberManagment.Models.AddMemeberModel
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Addmember</title>
+    <environment include="Development">
+
+        <link href="~/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+    </environment>
+</head>
+<body>
+    @if (ViewBag.isSuccess == true)
+    {
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Congrats!</strong> You added new member succesfuly.<br />
+
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    <div class="container">
+        <br />
+        <h4>AddMemeberModel</h4>
+        <hr />
+        <div class="row" id="mm">
+            <div class="col-md-4">
+                <form method="post" enctype="multipart/form-data" id="Addform">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                   
+                    
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" id="fname" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label"></label>
+                        <input asp-for="LastName" class="form-control" id="lname" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Country" class="control-label"></label>
+                        <select asp-for="Country" asp-items="@ViewBag.countries" class="form-control" id="country">
+                           <option value="" selected>Choose country</option>
+                         
+                        </select>
+                        <span asp-validation-for="Country" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="City" class="control-label"></label>
+                        <select asp-for="City" class="form-control" id="city">
+                            <option value="" selected>Choose city</option>
+                          
+                        </select>
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="gender" class="control-label"></label>
+
+                        <label>male</label>
+                        <input type="radio" asp-for="gender" name="gender" value="male" class="gender" />
+                        <label>female</label>
+                        <input type="radio" asp-for="gender" name="gender" value="female" class="gender" />
+
+                        <span asp-validation-for="gender" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Birth" class="control-label"></label>
+                        <input asp-for="Birth" class="form-control" id="birth" />
+                        <span asp-validation-for="Birth" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="phone" class="control-label"></label>
+                        <input asp-for="phone" class="form-control" id="phone" />
+                        <span asp-validation-for="phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" id="email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Note" class="control-label"></label>
+                        <textarea asp-for="Note" class="form-control" id="text"></textarea>
+                        <span asp-validation-for="Note" class="text-danger"></span>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <div class="custom-file">
+
+
+                            <label class="form-label" asp-for="image"  for="customFile"></label>
+                            <input asp-for="image" class="form-control img" id="customFile" />
+                            <span asp-validation-for="image" class="text-danger"></span>
+
+                        </div>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="status" id="status" /> @Html.DisplayNameFor(model => model.status)
+                        </label>
+                    </div>
+                    <div class="form-group">
+            <button class="btn btn-primary" type="submit" id="saveData">AddMember</button>
+        </div>
+
+                   
+                    <br />
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="GetUser" asp-controller="Account">Back to List</a>
+        </div>
+        <br />
+        <br />
+    </div>
+
+    @*@section Scripts
+    {
+        <script>
+            $("form").on("submit", function (e) {
+                e.preventDefault();
+                var fname = $("#fname").val();
+                var lname = $("#lname").val();
+                var birth = $("#birth").val();
+                var country = $("#country").val();
+                var city = $("#city").val();
+                var email = $("#email").val();
+                var status = $("#status").val();
+                var image = $("#customFile").val();
+                var text = $("#text").val();
+                var phone = $("#phone").val();
+                var gender = $("#gender").val();
+
+
+
+                
+                $.ajax({
+                    url: "/Account/Addmember",
+                    method: "POST",
+                    data: {
+                        FirstName: fname,
+                        LastName: lname,
+                        Email: email,
+                        Birth: birth,
+                        Country: country,
+                        City: city,
+                        status: status,
+                        image: image,
+                        Note: text,
+                        phone: phone,
+                        gender: gender,
+
+                    },
+                   
+                    success: function (data) {
+                        console.log(data);
+                        alert("success");
+                        if (data.errors != undefined) {
+                            //error
+                          
+                        } else {
+                            //success
+                            
+                        }
+                       
+                        
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        alert("fail");
+                    }
+                });
+            });
+        </script>
+    }*@
+
+
+</body>
+</html>
+
+           
