@@ -37,17 +37,17 @@
                     
                     <div class="form-group">
                         <label asp-for="FirstName" class="control-label"></label>
-                        <input asp-for="FirstName" class="form-control" id="fname" />
+                        <input asp-for="FirstName" class="form-control" id="fname"  style="width:400px"/>
                         <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="LastName" class="control-label"></label>
-                        <input asp-for="LastName" class="form-control" id="lname" />
+                        <input asp-for="LastName" class="form-control" id="lname" style="width:400px" />
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Country" class="control-label"></label>
-                        <select asp-for="Country" asp-items="@ViewBag.countries" class="form-control" id="country">
+                        <select asp-for="Country" asp-items="@ViewBag.countries" class="form-control" id="country" style="width:400px">
                            <option value="" selected>Choose country</option>
                          
                         </select>
@@ -55,42 +55,42 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="City" class="control-label"></label>
-                        <select asp-for="City" class="form-control" id="city">
+                        <select asp-for="City" class="form-control" id="city" style="width:400px">
                             <option value="" selected>Choose city</option>
                           
                         </select>
                         <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                     <br />
-                    <div class="form-group">
-                        <label asp-for="gender" class="control-label"></label>
+                    <div class="form-group" style="display: block">
+                        <label asp-for="gender" class="control-label" ></label>
 
-                        <label>male</label>
-                        <input type="radio" asp-for="gender" name="gender" value="male" class="gender" />
+                        <label style="display: block">male</label>
+                        <input type="radio" asp-for="gender" name="gender" value="male" class="gender" style="display: block"/>
                         <label>female</label>
-                        <input type="radio" asp-for="gender" name="gender" value="female" class="gender" />
+                        <input type="radio" asp-for="gender" name="gender" value="female" class="gender" style="display: block" />
 
                         <span asp-validation-for="gender" class="text-danger"></span>
                     </div>
                     <br />
                     <div class="form-group">
                         <label asp-for="Birth" class="control-label"></label>
-                        <input asp-for="Birth" class="form-control" id="birth" />
+                        <input asp-for="Birth" class="form-control" id="birth" style="width:400px" />
                         <span asp-validation-for="Birth" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="phone" class="control-label"></label>
-                        <input asp-for="phone" class="form-control" id="phone" />
+                        <input asp-for="phone" class="form-control" id="phone" style="width:400px"/>
                         <span asp-validation-for="phone" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" id="email" />
+                        <input asp-for="Email" class="form-control" id="email" style="width:400px"/>
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Note" class="control-label"></label>
-                        <textarea asp-for="Note" class="form-control" id="text"></textarea>
+                        <textarea asp-for="Note" class="form-control" id="text" style="width:400px"></textarea>
                         <span asp-validation-for="Note" class="text-danger"></span>
                     </div>
 
@@ -101,7 +101,7 @@
 
 
                             <label class="form-label" asp-for="image"  for="customFile"></label>
-                            <input asp-for="image" class="form-control img" id="customFile" />
+                            <input asp-for="image" class="form-control img" id="customFile" style="width:400px" />
                             <span asp-validation-for="image" class="text-danger"></span>
 
                         </div>

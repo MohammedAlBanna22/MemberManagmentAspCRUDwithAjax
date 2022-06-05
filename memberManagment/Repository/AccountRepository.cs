@@ -116,9 +116,43 @@ namespace memberManagment.Repository
 
 
         }
-       
 
 
+        public AddMemeberModel ViewMember (Accounts member)
+        {
+            var counrtyobj = _acountcontext.Countries.Where(x => x.name.Equals(member.Country)).FirstOrDefault();
+            int counryid = counrtyobj.id;
+            var city = _acountcontext.Cities.Where(x => x.name.Equals(member.City)).FirstOrDefault();
+            int cityid = city.id;
+
+            AddMemeberModel user = new AddMemeberModel
+            {
+                id=member.Id,
+                FirstName=member.FirstName,
+                LastName=member.LastName,
+                Country=counryid,
+                City=cityid,
+                gender = member.gender,
+                Birth =member.Birth,
+                phone=member.phone,
+                Email=member.Email,
+                imageurl=member.imageurl,
+               status=member.status,
+
+
+            };
+          
+
+
+            
+           
+
+            
+            
+            
+           
+            return user;
+        }
 
     }
 }

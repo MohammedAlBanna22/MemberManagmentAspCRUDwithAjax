@@ -15,5 +15,6 @@ namespace memberManagment.Repository
         Accounts find(int id);
         Task<AddMemeberModel> Getuser();
         Task<Accounts> update(AddMemeberModel member);
+        AddMemeberModel ViewMember(Accounts member);
     }
 }

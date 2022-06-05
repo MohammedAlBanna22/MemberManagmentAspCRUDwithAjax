@@ -29,10 +29,7 @@ namespace memberManagment.Controllers
             this.context = context;
             _mapper = mapper;
         }
-        public IActionResult SignUp()
-        {
-            return View();
-        }
+   
         public ActionResult Addmember(bool isSuccess=false)
         {
             var countrydata = context.Countries.Where(x => x.name == "palestine" || x.name == "cario").FirstOrDefault();
@@ -43,11 +40,6 @@ namespace memberManagment.Controllers
                 context.SaveChanges();
             }
 
-            ViewBag.isSuccess = isSuccess;
-            var obj = context.Countries.ToList();
-
-            SelectList countries = new SelectList(obj, "id", "name");
-            ViewBag.countries = countries;
             return View();
         }
         [HttpPost]
@@ -105,6 +97,7 @@ namespace memberManagment.Controllers
         public ActionResult Edit(int id)
         {
             var user =  _account.find(id);
+            //var userviewmodel = _account.ViewMember(user);
             var obj = context.Countries.ToList();
             SelectList countries = new SelectList(obj, "id", "name");
             ViewBag.countries = countries;

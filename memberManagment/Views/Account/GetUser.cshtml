@@ -45,7 +45,7 @@
                             <td>@x.gender</td>
 
                             <td>@x.Note</td>
-                            @*<td><img src="@x.imageurl" style="height:40px;width:40px" /></td>*@
+                          
                             <td><button type="button" data-id="@x.Id" class="del">Delete</button></td>
                             <td><button type="button"  class="btn btn-primary edit" data-toggle="modal" data-target="#exampleModal" data-edit="@x.Id"   id="edit">Edit </button></td>
 
@@ -200,10 +200,13 @@
                                   <td>${data.data.country}</td>
                                   <td>${data.data.gender}</td>
                                   <td>${data.data.note}</td>
-                                  <td><button type="button" data-id="${id}" class="del">Delete</button></td>
-                                  <td><button type="button"  class="btn btn-primary edit" data-toggle="modal" data-target="#exampleModal" data-edit="${id}"   id="edit">Edit </button></td>
+                                  
                                     <br>
                                     </tr >`
+
+
+                                //< td > <button type="button" data-id="${id}" class="del">Delete</button></td>
+                                //<td><button type="button" class="btn btn-primary edit" data-toggle="modal" data-target="#exampleModal" data-edit="${id}" id="edit">Edit </button></td>
                             if (id == null) {
 
                                 $("table").append(row);
